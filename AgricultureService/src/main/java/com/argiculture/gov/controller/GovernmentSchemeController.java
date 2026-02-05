@@ -4,6 +4,8 @@ import com.agriculture.gov.dto.ApiResponse;
 import com.agriculture.gov.dto.GovernmentSchemeDTO;
 import com.agriculture.gov.entity.GovernmentScheme;
 import com.agriculture.gov.service.GovernmentSchemeService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/schemes")
 @CrossOrigin(origins = "*")
+@Api(tags = "Government Schemes", description = "Operations related to government agriculture schemes")
 public class GovernmentSchemeController {
     
     private static final Logger logger = LoggerFactory.getLogger(GovernmentSchemeController.class);
@@ -25,6 +28,7 @@ public class GovernmentSchemeController {
     private GovernmentSchemeService schemeService;
 
     @GetMapping
+    @ApiOperation(value = "Get all active schemes", notes = "Retrieves all active government agriculture schemes")
     public ResponseEntity<ApiResponse<List<GovernmentSchemeDTO>>> getAllActiveSchemes() {
         logger.info("GET /api/v1/schemes - Fetching all active schemes");
         try {
@@ -38,6 +42,7 @@ public class GovernmentSchemeController {
     }
 
     @GetMapping("/search")
+    @ApiOperation(value = "Search schemes", notes = "Search government schemes by keyword")
     public ResponseEntity<ApiResponse<List<GovernmentSchemeDTO>>> searchSchemes(@RequestParam String keyword) {
         logger.info("GET /api/v1/schemes/search - Searching schemes with keyword: {}", keyword);
         try {
@@ -51,6 +56,7 @@ public class GovernmentSchemeController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation(value = "Get scheme by ID", notes = "Retrieves a specific government scheme by its ID")
     public ResponseEntity<ApiResponse<GovernmentSchemeDTO>> getSchemeById(@PathVariable Long id) {
         logger.info("GET /api/v1/schemes/{} - Fetching scheme by id", id);
         try {
@@ -64,6 +70,7 @@ public class GovernmentSchemeController {
     }
 
     @PostMapping
+    @ApiOperation(value = "Create new scheme", notes = "Creates a new government agriculture scheme")
     public ResponseEntity<ApiResponse<GovernmentSchemeDTO>> createScheme(@Valid @RequestBody GovernmentScheme scheme) {
         logger.info("POST /api/v1/schemes - Creating new scheme: {}", scheme.getSchemeName());
         try {
@@ -78,6 +85,7 @@ public class GovernmentSchemeController {
     }
 
     @PutMapping("/{id}")
+    @ApiOperation(value = "Update scheme", notes = "Updates an existing government scheme")
     public ResponseEntity<ApiResponse<GovernmentSchemeDTO>> updateScheme(@PathVariable Long id, 
                                                                         @Valid @RequestBody GovernmentScheme schemeDetails) {
         logger.info("PUT /api/v1/schemes/{} - Updating scheme", id);
